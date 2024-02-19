@@ -1,13 +1,34 @@
-import Image from 'next/image';
-import { i18n, type Locale } from 'lib/i18n-config';
+'use client';
 
-export default function NotFound({
-  locale,
-  translations,
-}: {
-  locale: Locale;
-  translations: Record<string, string>;
-}) {
+import { useMemo } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import type { Locale } from 'lib/i18n-config';
+
+const translations = {
+  'en-us': {
+    'not-found': 'This is the root not-found page',
+  },
+  'es-es': {
+    'not-found': 'Esta página no existe',
+  },
+  'fr-fr': {
+    'not-found': "Cette page n'existe pas",
+  },
+};
+
+const REGEX_LOCALE = /^\/{0,1}([A-Za-z]{2}-[A-Za-z]{2})\//;
+
+export const getLocaleFromPath = (pathname: string): Locale | undefined =>
+  (pathname.match(REGEX_LOCALE)?.at(1) as Locale) || undefined;
+
+export default function NotFound() {
+  const pathname = usePathname();
+  const locale = useMemo(
+    () => getLocaleFromPath(pathname) || 'en-us',
+    [pathname]
+  );
+
   return (
     <html className="h-full" lang={locale}>
       <body>
@@ -37,7 +58,7 @@ export default function NotFound({
             </div>
           </div>
 
-          <h2 className="text-2xl">{translations['not-found']}</h2>
+          <h2 className="text-2xl">{translations[locale]['not-found']}</h2>
 
           <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
         </main>
