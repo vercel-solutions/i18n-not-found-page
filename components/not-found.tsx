@@ -29,7 +29,7 @@ export default function NotFound() {
     () => getLocaleFromPath(pathname) || 'en-us',
     [pathname]
   );
-  console.log('404 LOCALE', locale);
+  console.log('LOCALE', locale);
 
   return (
     <html className="h-full" lang={locale}>
