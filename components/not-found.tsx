@@ -24,12 +24,12 @@ export const getLocaleFromPath = (pathname: string): Locale | undefined =>
 
 export default function NotFound() {
   const pathname = usePathname();
-  console.log('PATHNAME', pathname);
+  console.log('404 PATHNAME', pathname);
   const locale = useMemo(
     () => getLocaleFromPath(pathname) || 'en-us',
     [pathname]
   );
-  console.log('LOCALE', locale);
+  console.log('404 LOCALE', locale);
 
   return (
     <html className="h-full" lang={locale}>
