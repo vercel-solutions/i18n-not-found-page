@@ -24,6 +24,7 @@ export const getLocaleFromPath = (pathname: string): Locale | undefined =>
 
 export default function NotFound() {
   const pathname = usePathname();
+  console.log('PP', pathname);
   const locale = useMemo(() => getLocaleFromPath(pathname), [pathname]);
 
   return (
