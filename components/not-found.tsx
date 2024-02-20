@@ -24,12 +24,7 @@ export const getLocaleFromPath = (pathname: string): Locale | undefined =>
 
 export default function NotFound() {
   const pathname = usePathname();
-  console.log('404 PATHNAME', pathname);
-  const locale = useMemo(
-    () => getLocaleFromPath(pathname) || 'en-us',
-    [pathname]
-  );
-  console.log('LOCALE', locale);
+  const locale = useMemo(() => getLocaleFromPath(pathname), [pathname]);
 
   return (
     <html className="h-full" lang={locale}>
@@ -60,7 +55,9 @@ export default function NotFound() {
             </div>
           </div>
 
-          <h2 className="text-2xl">{translations[locale]['not-found']}</h2>
+          {locale && (
+            <h2 className="text-2xl">{translations[locale]['not-found']}</h2>
+          )}
 
           <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>
         </main>
